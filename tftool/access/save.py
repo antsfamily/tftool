@@ -38,6 +38,5 @@ def save_ckpt(sess, ckpt_dir, step):
     print("Checkpoint of step " + str(step) + " saved!")
 
 
-
 if __name__ == '__main__':
     pass
