@@ -33,7 +33,12 @@ def square_root_pool(value, ksize, strides, padding, data_format="NHWC", name=No
       A `Tensor`. Has the same type as `value`.
     """
     value = tf.square(value)
-    return tf.sqrt(tf.nn.avg_pool(value, ksize, strides, padding, data_format="NHWC", name=None))
+    inshape = value.get_shape().as_list()
+    shape = [ksize[1], ksize[2], inshape[3], inshape[3]]
+    # print(inshape, "==============================", shape)
+    filters = tf.ones(shape=shape, dtype=value.dtype)
+    # return tf.sqrt(tf.nn.avg_pool(value, ksize, strides, padding, data_format="NHWC", name=None))
+    return tf.sqrt(tf.nn.conv2d(value, filters, strides, padding=padding, data_format='NHWC', dilations=[1, 1, 1, 1], name=name))
 
 
 
